@@ -3,6 +3,6 @@
 
 #include <string>
 
-void list_directory(const std::string& path);
+void list_directory(const std::string& path, bool l);
 
 #endif
