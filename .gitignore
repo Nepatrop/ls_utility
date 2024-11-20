@@ -1,0 +1,11 @@
+ls
+
+.vscode/
+.idea/
+
+build/
+dist/
+
+*.log
+
+*~
