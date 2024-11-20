@@ -1,7 +1,6 @@
 #include <iostream>
 #include <dirent.h>
 #include <vector>
-#include <sys/stat.h>
 #include <iomanip>
 #include <pwd.h>
 #include <grp.h>
@@ -11,11 +10,6 @@
 #include "utils.cpp"
 
 const char* months[] = {"янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"};
-
-struct FileInfo {
-    std::string name;
-    struct stat stat;
-};
 
 bool compare_name(const FileInfo& fir, const FileInfo& sec) {
     return fir.name < sec.name;
