@@ -15,7 +15,11 @@ bool compare_name(const FileInfo& fir, const FileInfo& sec) {
     return fir.name < sec.name;
 }
 
-void list_directory(const std::string& path, bool l) {
+bool compare_name_reverse(const FileInfo& fir, const FileInfo& sec) {
+    return fir.name > sec.name;
+}
+
+void list_directory(const std::string& path, bool l, bool r) {
     DIR* dir = opendir(path.c_str());
     
     if (dir == nullptr) {
@@ -54,7 +58,11 @@ void list_directory(const std::string& path, bool l) {
     }
     closedir(dir);
 
-    std::sort(files.begin(), files.end(), compare_name);
+    if (r) {
+        std::sort(files.begin(), files.end(), compare_name_reverse);
+    } else {
+        std::sort(files.begin(), files.end(), compare_name);
+    }
 
     for (const auto& file : files) {
         if (l) {

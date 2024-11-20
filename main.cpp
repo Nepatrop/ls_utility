@@ -3,14 +3,18 @@
 #include "ls.cpp"
 
 int main(int argc, char* argv[]) {
-    bool l;
     std::string directory = ".";
     int opt;
+    bool l;
+    bool r;
 
-    while ((opt = getopt(argc, argv, "l")) != -1) {
+    while ((opt = getopt(argc, argv, "lr")) != -1) {
         switch (opt) {
             case 'l':
                 l = true;
+                break;
+            case 'r':
+                r = true;
                 break;
             default:
                 std::cerr << "Error" << std::endl;
@@ -21,7 +25,7 @@ int main(int argc, char* argv[]) {
         directory = argv[optind];
     }
 
-    list_directory(directory, l);
+    list_directory(directory, l, r);
 
     return 0;
 }

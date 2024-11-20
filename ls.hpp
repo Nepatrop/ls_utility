@@ -10,6 +10,7 @@ struct FileInfo {
 };
 
 bool compare_name(const FileInfo& fir, const FileInfo& sec);
-void list_directory(const std::string& path, bool l);
+bool compare_name_reverse(const FileInfo& fir, const FileInfo& sec);
+void list_directory(const std::string& path, bool l, bool r);
 
 #endif
