@@ -14,8 +14,8 @@
 1. **Клонировать репозиторий**:
 
    ```bash
-   git clone https://github.com/Nepatrop/HubParser.git
-   cd HubParser
+   git clone https://github.com/Nepatrop/ls_utility
+   cd ls_utility
    ```
 
 2. **Сборка**:
