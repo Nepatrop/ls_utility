@@ -5,10 +5,11 @@
 int main(int argc, char* argv[]) {
     std::string directory = ".";
     int opt;
-    bool l;
-    bool r;
+    bool l = false;
+    bool r = false;
+    bool h = false;
 
-    while ((opt = getopt(argc, argv, "lr")) != -1) {
+    while ((opt = getopt(argc, argv, "lrh")) != -1) {
         switch (opt) {
             case 'l':
                 l = true;
@@ -16,8 +17,11 @@ int main(int argc, char* argv[]) {
             case 'r':
                 r = true;
                 break;
+            case 'h':
+                h = true;
+                break;
             default:
-                std::cerr << "Error" << std::endl;
+                return 0;
         }
     }
 
@@ -25,7 +29,7 @@ int main(int argc, char* argv[]) {
         directory = argv[optind];
     }
 
-    list_directory(directory, l, r);
+    list_directory(directory, l, r, h);
 
     return 0;
 }

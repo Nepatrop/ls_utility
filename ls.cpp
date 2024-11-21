@@ -19,7 +19,7 @@ bool compare_name_reverse(const FileInfo& fir, const FileInfo& sec) {
     return fir.name > sec.name;
 }
 
-void list_directory(const std::string& path, bool l, bool r) {
+void list_directory(const std::string& path, bool l, bool r, bool h) {
     DIR* dir = opendir(path.c_str());
     
     if (dir == nullptr) {
@@ -38,10 +38,9 @@ void list_directory(const std::string& path, bool l, bool r) {
         if (dirent->d_name[0] != '.') {
             std::string file = dirent->d_name;
             std::string full_path = path + "/" + file;
+            std::string size_h = "";
             struct stat file_stat;
             if (stat(full_path.c_str(), &file_stat) == 0) {
-                files.push_back({file, file_stat});
-
                 size_t nlink_width = std::to_string(file_stat.st_nlink).length();
                 if (nlink_width > nlink_tab) nlink_tab = nlink_width;
                 
@@ -51,8 +50,16 @@ void list_directory(const std::string& path, bool l, bool r) {
                 size_t group_width  = std::string(getgrgid(file_stat.st_gid)->gr_name).length();
                 if (group_width > group_tab) group_tab = group_width;
                 
-                size_t size_width  = std::to_string(file_stat.st_size).length();
-                if (size_width > size_tab) size_tab = size_width;
+                if (h){
+                    size_h = file_size(file_stat.st_size, h);
+                    size_t size_width  = size_h.length();
+                    if (size_width > size_tab) size_tab = size_width;
+                } else {
+                    size_t size_width  = std::to_string(file_stat.st_size).length();
+                    if (size_width > size_tab) size_tab = size_width;
+                }
+
+                files.push_back({file, file_stat, size_h});
             }
         }
     }
@@ -74,7 +81,11 @@ void list_directory(const std::string& path, bool l, bool r) {
             
             std::cout << std::setw(group_tab) << getgrgid(file.stat.st_gid)->gr_name << " ";
             
-            std::cout << std::setw(size_tab) << file.stat.st_size << " ";
+            if (h){
+                std::cout << std::setw(size_tab) << file.h_size << " ";
+            } else {
+                std::cout << std::setw(size_tab) << file_size(file.stat.st_size, h)<< " ";
+            }
             
             std::tm* timeinfo = std::localtime(&file.stat.st_mtime);
             std::cout << months[timeinfo->tm_mon] << " ";

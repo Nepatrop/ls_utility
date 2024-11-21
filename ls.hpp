@@ -7,10 +7,11 @@
 struct FileInfo {
     std::string name;
     struct stat stat;
+    std::string h_size;
 };
 
 bool compare_name(const FileInfo& fir, const FileInfo& sec);
 bool compare_name_reverse(const FileInfo& fir, const FileInfo& sec);
-void list_directory(const std::string& path, bool l, bool r);
+void list_directory(const std::string& path, bool l, bool r, bool h);
 
 #endif
